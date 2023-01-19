@@ -1,8 +1,14 @@
 <template>
-  <div class="index-page-component"></div>
+  <div class="index-page-component">
+  </div>
 </template>
 
 <script>
+
+/**
+ * @module pages/index.vue
+ * @desc главная страница
+ */
 export default {
   name: 'IndexPage',
 }
