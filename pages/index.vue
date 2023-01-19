@@ -11,6 +11,10 @@
  */
 export default {
   name: 'IndexPage',
+  mounted() {
+    this.$store.dispatch('tasks/getTasks')
+  },
+
 }
 </script>
 
