@@ -1,7 +1,9 @@
 <template>
   <div class="task-item-component">
     <check-box class="checkbox" :checked="complete" @click="onCheckBox" />
-    <nuxt-link :to="id" class="text" :class="classText">{{ textTask }}</nuxt-link>
+    <nuxt-link :to="'/todo/' + id">
+      <span class="text" :class="classText">{{ textTask }}</span>
+    </nuxt-link>
   </div>
 </template>
 
@@ -29,9 +31,9 @@ export default {
       default: 'Default task'
     },
     id: {
-      type: Number,
+      type: String,
       required: true,
-      default: 0
+      default: '0'
     },
     complete: {
       type: Boolean,

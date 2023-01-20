@@ -39,8 +39,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.the-input-component {
-}
-
-</style>
