@@ -8,9 +8,6 @@
 /**
  * @module layouts/default.vue
  * @desc обёртка по умолчанию
- * @vue-prop {type} name - desc
- * @vue-data {type} name - desc
- * @vue-computed {type} name - desc
  */
 export default {
   name: 'DefaultLayout',
@@ -23,6 +20,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
 }
 
 </style>

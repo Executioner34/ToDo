@@ -1,35 +1,22 @@
 <template>
-  <div class="_id">
-    mock$END$
+  <div class="todo-page-component">
+    <h2>{{ taskText }}</h2>
   </div>
 </template>
 
 <script>
 /**
  * @module pages/todo/_id.vue
- * @desc component_description
- * @vue-prop {type} name - desc
- * @vue-data {type} name - desc
- * @vue-computed {type} name - desc
+ * @desc страница задачи
+ * @vue-computed {String} taskText - получаем текст задачи из стора
  */
 export default {
-  name: '_id',
+  name: 'TodoPage',
+  middleware: ['todoPage'],
+  computed: {
+    taskText() {
+      return this.$store.getters["tasks/textIDTask"](Number(this.$route.params.id))
+    }
+  }
 };
 </script>
-
-<style lang="scss" scoped>
-._id {
-}
-
-@include tablet {
-
-  ._id {
-  }
-}
-
-@include mobile {
-
-  ._id {
-  }
-}
-</style>
