@@ -14,7 +14,10 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  css: [],
+  css: [
+    'normalize-css/normalize.css',
+    '~/assets/scss/global.scss',
+  ],
 
   plugins: [],
 
