@@ -1,31 +1,32 @@
 class LocalStorage {
-  constructor() {
-    this.ls = localStorage;
-  }
-
-  getItem(name) {
-    const item = JSON.parse(this.ls.getItem(name))
-    try {
-      return item
-    } catch (e) {
-      return e
-    }
+  getItem(key) {
+    return JSON.parse(localStorage.getItem(key))
   }
 
   saveItem(props) {
-    const {item , name} = props;
-    const items = this.getItem(name)
-    try {
-      items.push(item)
-      return this.ls.setItem(name, JSON.stringify(items))
-    } catch (e) {
-      return e
+    const {key , value} = props;
+    const arr = this.getItem(key)
+    if (arr === null) {
+      localStorage.setItem(key, JSON.stringify([value]))
+    } else {
+      arr.push(value)
+      localStorage.setItem(key, JSON.stringify(arr))
+    }
+  }
+
+  updateItem(props) {
+    const {key, value, id} = props;
+    const arr = this.getItem(key);
+    const ind = arr.findIndex(item => item.id === id);
+    if (ind !== -1) {
+      arr[ind] = value;
+      localStorage.setItem(key, JSON.stringify(arr))
     }
   }
 
   destroy() {
-    this.ls.clear()
+    localStorage.clear()
   }
 }
 
-export default new LocalStorage()
+export default new LocalStorage
