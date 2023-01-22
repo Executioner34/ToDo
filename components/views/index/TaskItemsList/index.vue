@@ -36,6 +36,7 @@ export default {
     onCheckTask(task) {
       const {text, id, checked} = task
       this.$store.dispatch('tasks/pullTask', {text, id, checked: !checked})
+      this.$store.commit('tasks/TOGGLE_CHECKED', id)
     }
   }
 };
