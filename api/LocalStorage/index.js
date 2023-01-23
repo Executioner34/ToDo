@@ -24,6 +24,13 @@ class LocalStorage {
     }
   }
 
+  deleteItem(props) {
+    const {key, id} = props;
+    const arr = this.getItem(key);
+    const newArr = arr.filter(item => item.id !== id);
+    localStorage.setItem(key, JSON.stringify(newArr))
+  }
+
   destroy() {
     localStorage.clear()
   }

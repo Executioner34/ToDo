@@ -6,6 +6,7 @@
         :complete="task.checked"
         :text-task="task.text"
         @onCheck="onCheckTask(task)"
+        @onButton="onDeleteTask(task.id)"
       />
     </li>
   </ul>
@@ -36,9 +37,17 @@ export default {
     onCheckTask(task) {
       const {text, id, checked} = task
       this.$store.dispatch('tasks/pullTask', {text, id, checked: !checked})
-      this.$store.commit('tasks/TOGGLE_CHECKED', id)
+    },
+    onDeleteTask(id) {
+      this.$store.dispatch('tasks/deleteTask', id)
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.task-items-list-component {
+  width: 100%;
+}
+</style>
 

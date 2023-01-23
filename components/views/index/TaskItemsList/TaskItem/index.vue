@@ -4,6 +4,7 @@
     <nuxt-link :to="'/todo/' + id">
       <span class="text" :class="classText">{{ textTask }}</span>
     </nuxt-link>
+    <button class="btn" @click="onButton">❌</button>
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import CheckBox from "~/components/CheckBox/index.vue";
  * @vue-prop {Boolean} complete - выполнена или нет
  * @vue-computed {String} classText - модификатор класса для текста
  * @vue-event {Void} onCheck - эвент клика по чекбоксу
+ * @vue-event {Void} onButton - эвент клика по кнопке
  */
 export default {
   name: 'TaskItem',
@@ -49,6 +51,9 @@ export default {
   methods: {
     onCheckBox() {
       this.$emit('onCheck');
+    },
+    onButton() {
+      this.$emit('onButton')
     }
   }
 };
@@ -69,6 +74,16 @@ export default {
     &.complete {
       text-decoration: line-through;
     }
+  }
+
+  .btn {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    background-color: #fff;
   }
 }
 
