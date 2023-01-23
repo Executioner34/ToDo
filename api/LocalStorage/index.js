@@ -24,7 +24,6 @@ class LocalStorage {
     }
   }
 
-<<<<<<< HEAD
   deleteItem(props) {
     const {key, id} = props;
     const arr = this.getItem(key);
@@ -32,8 +31,6 @@ class LocalStorage {
     localStorage.setItem(key, JSON.stringify(newArr))
   }
 
-=======
->>>>>>> 3f026ebc5f2f73e79615c03d8c6900a8bc393aea
   destroy() {
     localStorage.clear()
   }
