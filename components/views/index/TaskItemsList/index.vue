@@ -1,19 +1,19 @@
 <template>
   <ul class="task-items-list-component">
-    <li v-for="task in tasks" :key="task.id">
-      <task-item
-        :id="IDToString(task.id)"
-        :complete="task.checked"
-        :text-task="task.text"
-        @onCheck="onCheckTask(task)"
-        @onButton="onDeleteTask(task.id)"
-      />
-    </li>
+    <task-item
+      v-for="task in tasks"
+      :id="IDToString(task.id)"
+      :key="task.id"
+      :complete="task.checked"
+      :text-task="task.text"
+      @toggle-complete="toggleCompleteTask(task)"
+      @delete="deleteTask(task.id)"
+    />
   </ul>
 </template>
 
 <script>
-import TaskItem from "~/components/views/index/TaskItemsList/TaskItem/index.vue";
+import TaskItem from '~/components/views/index/TaskItemsList/TaskItem/index.vue'
 
 /**
  * @module components/views/index/TaskItemsList/index.vue
@@ -23,26 +23,26 @@ import TaskItem from "~/components/views/index/TaskItemsList/TaskItem/index.vue"
 export default {
   name: 'TaskItemsList',
   components: {
-    TaskItem
+    TaskItem,
   },
   computed: {
     tasks() {
-      return this.$store.getters["tasks/filteredTask"]
+      return this.$store.getters['tasks/filteredTasks']
     },
   },
   methods: {
     IDToString(num) {
       return String(num)
     },
-    onCheckTask(task) {
-      const {text, id, checked} = task
-      this.$store.dispatch('tasks/pullTask', {text, id, checked: !checked})
+    toggleCompleteTask(task) {
+      const { text, id, checked } = task
+      this.$store.dispatch('tasks/pullTask', { text, id, checked: !checked })
     },
-    onDeleteTask(id) {
+    deleteTask(id) {
       this.$store.dispatch('tasks/deleteTask', id)
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -50,4 +50,3 @@ export default {
   width: 100%;
 }
 </style>
-

@@ -15,8 +15,10 @@ export default {
   middleware: ['todoPage'],
   computed: {
     taskText() {
-      return this.$store.getters["tasks/textIDTask"](Number(this.$route.params.id))
-    }
-  }
-};
+      return this.$store.getters['tasks/textTask'](
+        Number(this.$route.params.id)
+      )
+    },
+  },
+}
 </script>

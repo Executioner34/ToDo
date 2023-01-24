@@ -1,36 +1,42 @@
 <template>
-  <div class="add-task-component">
-    <the-input @onEnter="addTask" />
-  </div>
+  <input
+    v-model="text"
+    type="text"
+    placeholder="Введите текст"
+    class="add-task-component"
+    @keyup.enter="addTask"
+  />
 </template>
 
 <script>
-import TheInput from "~/components/TheInput/index.vue";
-
 /**
  * @module components/views/index/AddTask/index.vue
  * @desc компонент отображения поля ввода и взаимодействия со стором
+ * @vue-data {String} text - текст поля инпута
  * @vue-computed {Number} lastID - id последней задачи
  */
 export default {
   name: 'AddTask',
-  components: {
-    TheInput
+  data() {
+    return {
+      text: '',
+    }
   },
   computed: {
-    lastID() {
-      return this.$store.state.tasks.taskCounter
-    }
+    freeID() {
+      return this.$store.state.tasks.nextFreeID
+    },
   },
   methods: {
-    addTask(text) {
+    addTask() {
       const task = {
-        text,
-        id: this.lastID,
+        text: this.text,
+        id: this.freeID,
         checked: false,
       }
+      this.text = ''
       this.$store.dispatch('tasks/postTask', task)
-    }
-  }
-};
+    },
+  },
+}
 </script>
