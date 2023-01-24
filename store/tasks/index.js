@@ -1,71 +1,81 @@
-import LocalStorage from "~/api/LocalStorage";
+import LocalStorage from '~/api/LocalStorage'
+
+/**
+ * @module store/tasks/index.js
+ * @desc - модуль работы с задачами.
+ * @desc - tasks - массив задач. selectedFilter - выбранный фильтр. nextFreeID - свободное id для таски
+ */
 export const state = () => ({
   tasks: [],
-  currentFilter: '',
-  taskCounter: 0,
+  selectedFilter: '',
+  nextFreeID: 0,
 })
 
 export const getters = {
-  filteredTask: (state) => {
-    if (state.currentFilter === 'active') {
-      return state.tasks.filter(task => task.checked === false)
+  // Фильтруем задачи в зависимости от выбранного фильтра
+  filteredTasks: (state) => {
+    switch (state.selectedFilter) {
+      case 'active':
+        return state.tasks.filter((task) => task.checked === false)
+      case 'completed':
+        return state.tasks.filter((task) => task.checked === true)
+      default:
+        return state.tasks
     }
-    if (state.currentFilter === 'completed') {
-      return state.tasks.filter(task => task.checked === true)
-    }
-    return state.tasks
   },
-  textIDTask: (state) => (id) => state.tasks.find(task => task.id === id).text
+  // Возвращает текст задачи по её id
+  textTask: (state) => (id) => state.tasks.find((task) => task.id === id).text,
 }
 
 export const mutations = {
-  SET_TASKS: (state, payload) => {
+  // Записываем все задачи
+  SET_TASKS(state, payload) {
     state.tasks = payload
+    state.nextFreeID = state.tasks[state.tasks.length - 1].id + 1
   },
-  SET_TASK: (state, payload) => state.tasks.push(payload),
-  TOGGLE_CHECKED: (state, ind) => {
-    state.tasks[ind].checked = !state.tasks[ind].checked
+  // Добавляем задачу
+  ADD_TASK(state, payload) {
+    state.tasks.push(payload)
+    state.nextFreeID += 1
   },
-  DELETE_TASK: (state, id) => {
-    const ind = state.tasks.findIndex(task => task.id === id)
+  // Удаляем задачу
+  DELETE_TASK(state, id) {
+    const ind = state.tasks.findIndex((task) => task.id === id)
     if (ind !== -1) {
       state.tasks.splice(ind, 1)
+      state.nextFreeID -= 1
     }
   },
-  SET_CURRENT_FILTER: (state, payload) => {
-    state.currentFilter = payload
+  // Меняем у задачи статус отметки по её id
+  TOGGLE_CHECKED(state, ind) {
+    state.tasks[ind].checked = !state.tasks[ind].checked
   },
-  SET_COUNTER: (state, payload) => {
-    state.taskCounter = payload
+  // Текущий выбранный фильтр для задач
+  SET_SELECTED_FILTER(state, payload) {
+    state.selectedFilter = payload
   },
-  COUNTER: (state) => {
-    state.taskCounter += 1
-  }
 }
 
 export const actions = {
-  getTasks({commit}) {
+  getTasks({ commit }) {
     const tasks = LocalStorage.getItem('tasks')
     // Если в локальном хранилище нет задач то ничего не делаем
-    if (tasks === null) {
+    if (tasks === null || tasks.length === 0) {
       return
     }
-    const lastIDTask = tasks[tasks.length - 1].id
-    commit('SET_COUNTER', lastIDTask + 1)
     commit('SET_TASKS', tasks)
   },
-  postTask({commit}, data) {
-    LocalStorage.saveItem({value: data, key: 'tasks'})
-    commit('COUNTER')
-    commit('SET_TASK', data)
+  postTask({ commit }, data) {
+    LocalStorage.saveItem({ value: data, key: 'tasks' })
+    commit('ADD_TASK', data)
   },
-  deleteTask({commit}, id) {
-    LocalStorage.deleteItem({key: 'tasks', id})
+  deleteTask({ commit }, id) {
+    LocalStorage.deleteItem({ key: 'tasks', id })
     commit('DELETE_TASK', id)
   },
-  pullTask({commit}, data) {
+  pullTask({ commit }, data) {
     // Обновляем задачу в localStorage
-    LocalStorage.updateItem({value: data, id: data.id, key: 'tasks'})
+    LocalStorage.updateItem({ value: data, id: data.id, key: 'tasks' })
     commit('TOGGLE_CHECKED', data.id)
-  }
+  },
 }
