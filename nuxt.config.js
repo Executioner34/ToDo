@@ -14,10 +14,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  css: [
-    'normalize-css/normalize.css',
-    '~/assets/scss/global.scss',
-  ],
+  css: ['normalize-css/normalize.css', '~/assets/scss/global.scss'],
 
   plugins: [],
 
@@ -32,5 +29,5 @@ export default {
 
   modules: [],
 
-  build: {}
+  build: {},
 }

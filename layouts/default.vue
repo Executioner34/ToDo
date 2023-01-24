@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout-component">
-    <nuxt/>
+    <nuxt />
   </div>
 </template>
 
@@ -11,7 +11,7 @@
  */
 export default {
   name: 'DefaultLayout',
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -22,5 +22,4 @@ export default {
   align-items: center;
   padding-top: 20px;
 }
-
 </style>
