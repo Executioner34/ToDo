@@ -1,4 +1,4 @@
-import LocalStorage from '~/api/LocalStorage'
+import { deleteItem, getItem, saveItem, updateItem } from '~/api/LocalStorage'
 
 /**
  * @module store/tasks/index.js
@@ -58,7 +58,7 @@ export const mutations = {
 
 export const actions = {
   getTasks({ commit }) {
-    const tasks = LocalStorage.getItem('tasks')
+    const tasks = getItem('tasks')
     // Если в локальном хранилище нет задач то ничего не делаем
     if (tasks === null || tasks.length === 0) {
       return
@@ -66,16 +66,16 @@ export const actions = {
     commit('SET_TASKS', tasks)
   },
   postTask({ commit }, data) {
-    LocalStorage.saveItem({ value: data, key: 'tasks' })
+    saveItem({ value: data, key: 'tasks' })
     commit('ADD_TASK', data)
   },
   deleteTask({ commit }, id) {
-    LocalStorage.deleteItem({ key: 'tasks', id })
+    deleteItem({ key: 'tasks', id })
     commit('DELETE_TASK', id)
   },
   pullTask({ commit }, data) {
     // Обновляем задачу в localStorage
-    LocalStorage.updateItem({ value: data, id: data.id, key: 'tasks' })
+    updateItem({ value: data, id: data.id, key: 'tasks' })
     commit('TOGGLE_CHECKED', data.id)
   },
 }
