@@ -33,28 +33,18 @@ export const mutations = {
   // Записываем все задачи
   SET_TASKS(state, payload) {
     state.tasks = payload
-    state.nextFreeID = state.tasks[state.tasks.length - 1].id + 1
   },
   // Добавляем задачу
   ADD_TASK(state, payload) {
     state.tasks.push(payload)
-    state.nextFreeID += 1
-  },
-  // Удаляем задачу
-  DELETE_TASK(state, id) {
-    const ind = state.tasks.findIndex((task) => task.id === id)
-    if (ind !== -1) {
-      state.tasks.splice(ind, 1)
-      state.nextFreeID -= 1
-    }
-  },
-  // Меняем у задачи статус отметки по её id
-  TOGGLE_CHECKED(state, ind) {
-    state.tasks[ind].checked = !state.tasks[ind].checked
   },
   // Текущий выбранный фильтр для задач
   SET_SELECTED_FILTER(state, payload) {
     state.selectedFilter = payload
+  },
+  // Записывает новый последний id
+  SET_NEW_FREE_ID(state, id) {
+    state.nextFreeID = id
   },
 }
 
@@ -65,19 +55,24 @@ export const actions = {
     if (tasks === null || tasks.length === 0) {
       return
     }
+    const lastTaskID = tasks[tasks.length - 1].id
     commit('SET_TASKS', tasks)
+    commit('SET_NEW_FREE_ID', lastTaskID + 1)
   },
   postTask({ commit }, data) {
     saveItem({ value: data, key: 'tasks' })
     commit('ADD_TASK', data)
+    commit('SET_NEW_FREE_ID', data.id + 1)
   },
   deleteTask({ commit }, id) {
-    deleteItem({ key: 'tasks', id })
-    commit('DELETE_TASK', id)
+    const newTasks = deleteItem({ key: 'tasks', id })
+    const lastTaskID = newTasks[newTasks.length - 1].id
+    commit('SET_TASKS', newTasks)
+    commit('SET_NEW_FREE_ID', lastTaskID + 1)
   },
   pullTask({ commit }, data) {
     // Обновляем задачу в localStorage
-    updateItem({ value: data, id: data.id, key: 'tasks' })
-    commit('TOGGLE_CHECKED', data.id)
+    const newTasks = updateItem({ value: data, id: data.id, key: 'tasks' })
+    commit('SET_TASKS', newTasks)
   },
 }
