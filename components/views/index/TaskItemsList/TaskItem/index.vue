@@ -1,12 +1,12 @@
 <template>
   <li class="task-item-component">
-    <a class="link" @click="onLink">
-      <button ref="toggle" class="btn btn--complete" @click="toggleHandler">
+    <nuxt-link :to="path" class="link">
+      <button class="btn btn--complete" @click.stop.prevent="toggleHandler">
         {{ iconButton }}
       </button>
       <span class="text" :class="classText">{{ textTask }}</span>
-      <button ref="delete" class="btn" @click="deleteHandler">❌</button>
-    </a>
+      <button ref="delete" class="btn" @click.stop.prevent="deleteHandler">❌</button>
+    </nuxt-link>
   </li>
 </template>
 
@@ -19,6 +19,7 @@
  * @vue-prop {Boolean} complete - выполнена или нет
  * @vue-computed {String} classText - модификатор класса для текста
  * @vue-computed {String} iconButton - иконка для кнопки
+ * @vue-computed {String} path - динамический путь до страницы задачи
  * @vue-event {Void} toggle-complete - эвент клика по кнопке переключения статуса задачи
  * @vue-event {Void} delete - эвент клика по кнопке удаления задачи
  */
@@ -48,16 +49,11 @@ export default {
     iconButton() {
       return this.complete ? '✅' : '⬜'
     },
+    path() {
+      return '/todo/' + this.id
+    }
   },
   methods: {
-    onLink(event) {
-      const isAnyButton =
-        event.target === this.$refs.button || event.target === this.$refs.toggle
-      if (isAnyButton) {
-        return
-      }
-      this.$router.push(`/todo/${this.id}`)
-    },
     toggleHandler() {
       this.$emit('toggle-complete')
     },
