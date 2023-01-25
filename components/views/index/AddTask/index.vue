@@ -13,7 +13,7 @@
  * @module components/views/index/AddTask/index.vue
  * @desc компонент отображения поля ввода и взаимодействия со стором
  * @vue-data {String} text - текст поля инпута
- * @vue-computed {Number} lastID - id последней задачи
+ * @vue-computed {Number} freeID - свободный id для новой задачи
  */
 export default {
   name: 'AddTask',
@@ -28,6 +28,10 @@ export default {
     },
   },
   methods: {
+    /**
+     * Метод создает объект задачи с текстом, уникальным индификатором и состоянием отметки этой задачи.
+     * После этого эту задачу передаем методу стора для добавления её в массив задач
+     */
     addTask() {
       const task = {
         text: this.text,

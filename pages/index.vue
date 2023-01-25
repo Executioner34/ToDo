@@ -22,6 +22,9 @@ export default {
     AddTask,
     TaskItemsList,
   },
+  /**
+   * При mounted хуке запускаем метод стора для получения массива задач
+   */
   mounted() {
     this.$store.dispatch('tasks/getTasks')
   },

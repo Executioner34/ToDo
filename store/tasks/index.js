@@ -2,8 +2,10 @@ import { deleteItem, getItem, saveItem, updateItem } from '~/api/LocalStorage'
 
 /**
  * @module store/tasks/index.js
- * @desc - модуль работы с задачами.
- * @desc - tasks - массив задач. selectedFilter - выбранный фильтр. nextFreeID - свободное id для таски
+ * @desc - модуль работы с задачами
+ * @desc - tasks - массив задач
+ * @desc - selectedFilter - выбранный фильтр
+ * @desc - nextFreeID - свободное id для таски
  */
 export const state = () => ({
   tasks: [],

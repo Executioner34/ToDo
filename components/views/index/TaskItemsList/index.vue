@@ -2,7 +2,7 @@
   <ul class="task-items-list-component">
     <task-item
       v-for="task in tasks"
-      :id="IDToString(task.id)"
+      :id="task.id"
       :key="task.id"
       :complete="task.checked"
       :text-task="task.text"
@@ -31,13 +31,17 @@ export default {
     },
   },
   methods: {
-    IDToString(num) {
-      return String(num)
-    },
+    /**
+     * метод получает на вход объект задачи, меняет поле checked на противоположное и
+     * передает методу в сторе этот оюъект задачи.
+     */
     toggleCompleteTask(task) {
       const { text, id, checked } = task
       this.$store.dispatch('tasks/pullTask', { text, id, checked: !checked })
     },
+    /**
+     * метод получает на вход id задачи и передает методу в сторе этот id для удаления задачи
+     */
     deleteTask(id) {
       this.$store.dispatch('tasks/deleteTask', id)
     },

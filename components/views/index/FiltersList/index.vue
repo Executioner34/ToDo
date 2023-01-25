@@ -38,6 +38,9 @@ export default {
       this.$store.commit('tasks/SET_SELECTED_FILTER', newName)
     },
   },
+  /**
+   * При mounted хуке в сторе устанавливаем выбранный фильтр
+   */
   mounted() {
     this.$store.commit('tasks/SET_SELECTED_FILTER', this.selectedFilter)
   },

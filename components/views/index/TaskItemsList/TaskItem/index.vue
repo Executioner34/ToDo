@@ -34,9 +34,9 @@ export default {
       default: 'Default task',
     },
     id: {
-      type: String,
+      type: Number,
       required: true,
-      default: '',
+      default: 0,
     },
     complete: {
       type: Boolean,
