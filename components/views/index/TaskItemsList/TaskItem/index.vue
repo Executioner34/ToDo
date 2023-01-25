@@ -2,7 +2,7 @@
   <li class="task-item-component">
     <nuxt-link :to="path" class="link">
       <check-box :checked="complete" class="checkbox" @click.native.stop="checkBoxHandler"/>
-      <span class="text" :class="classText">{{ textTask }}</span>
+      <span :class="['text', {'text--complete': isCompleted}]">{{ textTask }}</span>
       <button ref="delete" class="btn" @click.stop.prevent="deleteHandler">❌</button>
     </nuxt-link>
   </li>
@@ -45,7 +45,7 @@ export default {
     },
   },
   computed: {
-    classText() {
+    isCompleted() {
       return this.complete ? 'complete' : ''
     },
     path() {
@@ -79,7 +79,7 @@ export default {
 
   .text {
     flex-grow: 1;
-    &.complete {
+    &--complete {
       text-decoration: line-through;
     }
   }
