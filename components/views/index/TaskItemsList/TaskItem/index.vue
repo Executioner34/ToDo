@@ -1,9 +1,7 @@
 <template>
   <li class="task-item-component">
     <nuxt-link :to="path" class="link">
-      <button class="btn btn--complete" @click.stop.prevent="toggleHandler">
-        {{ iconButton }}
-      </button>
+      <check-box :checked="complete" class="checkbox" @click.native.stop="checkBoxHandler"/>
       <span class="text" :class="classText">{{ textTask }}</span>
       <button ref="delete" class="btn" @click.stop.prevent="deleteHandler">❌</button>
     </nuxt-link>
@@ -11,6 +9,8 @@
 </template>
 
 <script>
+import CheckBox from "~/components/common/CheckBox/index.vue";
+
 /**
  * @module components/views/index/TaskItemsList/TaskItem/index.vue
  * @desc компонент задачи
@@ -18,13 +18,15 @@
  * @vue-prop {Number} id - id задачи для роута
  * @vue-prop {Boolean} complete - выполнена или нет
  * @vue-computed {String} classText - модификатор класса для текста
- * @vue-computed {String} iconButton - иконка для кнопки
  * @vue-computed {String} path - динамический путь до страницы задачи
- * @vue-event {Void} toggle-complete - эвент клика по кнопке переключения статуса задачи
+ * @vue-event {Void} checkBoxHandler - эвент изменения статуса задачи
  * @vue-event {Void} delete - эвент клика по кнопке удаления задачи
  */
 export default {
   name: 'TaskItem',
+  components: {
+    CheckBox
+  },
   props: {
     textTask: {
       type: String,
@@ -34,7 +36,7 @@ export default {
     id: {
       type: String,
       required: true,
-      default: '0',
+      default: '',
     },
     complete: {
       type: Boolean,
@@ -46,15 +48,12 @@ export default {
     classText() {
       return this.complete ? 'complete' : ''
     },
-    iconButton() {
-      return this.complete ? '✅' : '⬜'
-    },
     path() {
       return '/todo/' + this.id
     }
   },
   methods: {
-    toggleHandler() {
+    checkBoxHandler() {
       this.$emit('toggle-complete')
     },
     deleteHandler() {
@@ -74,6 +73,10 @@ export default {
     cursor: pointer;
   }
 
+  .checkbox {
+    margin-right: 10px;
+  }
+
   .text {
     flex-grow: 1;
     &.complete {
@@ -90,9 +93,6 @@ export default {
     padding: 0;
     border: none;
     background-color: #fff;
-    &--complete {
-      margin-right: 10px;
-    }
   }
 }
 </style>

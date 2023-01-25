@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import RadioInput from '~/components/common/RadioInput/RadioInput.vue'
+import RadioInput from '~/components/common/RadioInput/index.vue'
 
 /**
  * @module components/views/index/FiltersList/index.vue

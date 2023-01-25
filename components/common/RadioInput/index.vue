@@ -16,7 +16,7 @@
 
 <script>
 /**
- * @module components/common/RadioInput.vue
+ * @module components/common/RadioInput/index.vue
  * @desc компонент радио кнопки
  * @vue-prop {String} current - текущий выбранный радио инпут
  * @vue-prop {String} value - значение для радио инпута
