@@ -3,7 +3,7 @@
     <radio-input
       v-for="item in filters"
       :key="item"
-      v-model="selectedFilter"
+      v-model="activeFilter"
       :label="item"
       class="item"
     />
@@ -17,7 +17,8 @@ import RadioInput from '~/components/common/RadioInput/index.vue'
  * @module components/views/index/FiltersList/index.vue
  * @desc компонент отображения списка радио кнопок фильтра и взаимодействия со стором
  * @vue-data {Array} filters - массив фильтров
- * @vue-data {String} selectedFilter - выбранный фильтр
+ * @vue-data {String} activeFilter - data для выбранного фильтра из стора
+ * @vue-computed {String} selectedFilter - выбранный фильтр
  */
 export default {
   name: 'FiltersList',
@@ -26,21 +27,23 @@ export default {
   },
   data() {
     return {
-      selectedFilter: 'all',
+      activeFilter: '',
       filters: ['all', 'active', 'completed'],
     }
   },
+  computed: {
+    selectedFilter() {
+      return this.$store.state.tasks.selectedFilter
+    }
+  },
   watch: {
-    selectedFilter(newName) {
+    activeFilter(newName) {
       this.$store.commit('tasks/SET_SELECTED_FILTER', newName)
     },
   },
-  /**
-   * При mounted хуке в сторе устанавливаем выбранный фильтр
-   */
   mounted() {
-    this.$store.commit('tasks/SET_SELECTED_FILTER', this.selectedFilter)
-  },
+    this.activeFilter = this.selectedFilter
+  }
 }
 </script>
 

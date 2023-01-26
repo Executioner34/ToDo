@@ -9,7 +9,7 @@ import { deleteItem, getItem, saveItem, updateItem } from '~/api/LocalStorage'
  */
 export const state = () => ({
   tasks: [],
-  selectedFilter: '',
+  selectedFilter: 'all',
   nextFreeID: 0,
 })
 
