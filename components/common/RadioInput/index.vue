@@ -1,15 +1,15 @@
 <template>
   <li class="radio-input-component">
     <input
-      :id="value"
-      :value="value"
-      :checked="isChecked"
+      :id="label"
+      v-model="model"
+      :value="label"
       type="radio"
       class="radio"
-      @change="changeHandler"
+      @change="handleChange"
     />
-    <label :for="value">
-      <slot />
+    <label :for="label">
+      {{ label }}
     </label>
   </li>
 </template>
@@ -18,39 +18,47 @@
 /**
  * @module components/common/RadioInput/index.vue
  * @desc компонент радио кнопки
- * @vue-prop {String} current - текущий выбранный радио инпут
- * @vue-prop {String} value - значение для радио инпута
- * @vue-computed {Boolean} isChecked - вычисляемое значение для радио инпута
+ * @vue-prop {String} checked - пропс для v-model родителя
+ * @vue-prop {String} label - значение для радио инпута
+ * @vue-data {String} model - текущий выбранный радио инпут
  * @vue-event {String} changeHandler - возвращает новое значение радио инпута
  */
 export default {
   name: 'RadioInput',
   model: {
-    prop: 'current',
+    prop: 'checked',
     event: 'change',
   },
   props: {
-    value: {
+    label: {
       type: String,
       required: false,
       default: '',
     },
-    current: {
+    checked: {
       type: String,
       required: false,
       default: '',
     },
   },
-  computed: {
-    isChecked() {
-      return this.current === this.value
-    },
+  data() {
+    return {
+      model: ''
+    }
+  },
+  watch: {
+    checked(newValue) {
+      this.model = newValue
+    }
+  },
+  mounted() {
+    this.model = this.checked
   },
   methods: {
-    changeHandler(event) {
-      this.$emit('change', event.target.value)
-    },
-  },
+    handleChange() {
+      this.$emit('change', this.model)
+    }
+  }
 }
 </script>
 

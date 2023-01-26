@@ -4,11 +4,9 @@
       v-for="item in filters"
       :key="item"
       v-model="selectedFilter"
-      :value="item"
+      :label="item"
       class="item"
-    >
-      {{ item }}
-    </radio-input>
+    />
   </ul>
 </template>
 
@@ -33,8 +31,7 @@ export default {
     }
   },
   watch: {
-    selectedFilter: function (newName, oldName) {
-      this.selectedFilter = newName
+    selectedFilter(newName) {
       this.$store.commit('tasks/SET_SELECTED_FILTER', newName)
     },
   },
