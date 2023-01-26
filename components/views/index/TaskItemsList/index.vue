@@ -35,7 +35,7 @@ export default {
      * метод получает на вход объект задачи и передает методу в сторе этот объект задачи.
      */
     toggleCompleteTask(data) {
-      this.$store.dispatch('tasks/pullTask', data)
+      this.$store.dispatch('tasks/updateTasks', data)
     },
     /**
      * метод получает на вход id задачи и передает методу в сторе этот id для удаления задачи

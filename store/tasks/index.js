@@ -76,10 +76,9 @@ export const actions = {
     // если удалили последнюю задачу, то
     commit('SET_TASKS', [])
     commit('SET_NEW_FREE_ID', 0)
-
   },
-  pullTask({ commit }, data) {
-    // Обновляем задачу в localStorage
+  updateTasks({ commit }, data) {
+    // Обновляем задачу в localStorage и коммитим в стор изменный массив
     const newTasks = updateItem({ value: data, id: data.id, key: 'tasks' })
     commit('SET_TASKS', newTasks)
   },
