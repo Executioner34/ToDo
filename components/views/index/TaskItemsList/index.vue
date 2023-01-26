@@ -6,8 +6,8 @@
       :key="task.id"
       :complete="task.checked"
       :text-task="task.text"
-      @toggle-complete="toggleCompleteTask(task)"
-      @delete="deleteTask(task.id)"
+      @toggle-complete="toggleCompleteTask"
+      @delete="deleteTask"
     />
   </ul>
 </template>
@@ -32,12 +32,10 @@ export default {
   },
   methods: {
     /**
-     * метод получает на вход объект задачи, меняет поле checked на противоположное и
-     * передает методу в сторе этот оюъект задачи.
+     * метод получает на вход объект задачи и передает методу в сторе этот объект задачи.
      */
-    toggleCompleteTask(task) {
-      const { text, id, checked } = task
-      this.$store.dispatch('tasks/pullTask', { text, id, checked: !checked })
+    toggleCompleteTask(data) {
+      this.$store.dispatch('tasks/pullTask', data)
     },
     /**
      * метод получает на вход id задачи и передает методу в сторе этот id для удаления задачи

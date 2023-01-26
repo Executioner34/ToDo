@@ -1,9 +1,9 @@
 <template>
   <li class="task-item-component">
     <nuxt-link :to="path" class="link">
-      <check-box :checked="complete" class="checkbox" @click.native.stop="checkBoxHandler"/>
+      <check-box :checked="complete" class="checkbox" @update-checkbox="checkBoxHandler"/>
       <span :class="['text', {'text--complete': isCompleted}]">{{ textTask }}</span>
-      <button ref="delete" class="btn" @click.stop.prevent="deleteHandler">❌</button>
+      <button class="btn" @click.stop.prevent="deleteHandler">❌</button>
     </nuxt-link>
   </li>
 </template>
@@ -53,11 +53,16 @@ export default {
     }
   },
   methods: {
-    checkBoxHandler() {
-      this.$emit('toggle-complete')
+    checkBoxHandler(value) {
+      const data = {
+        text: this.textTask,
+        id: this.id,
+        checked: value
+      }
+      this.$emit('toggle-complete', data)
     },
     deleteHandler() {
-      this.$emit('delete')
+      this.$emit('delete', this.id)
     },
   },
 }

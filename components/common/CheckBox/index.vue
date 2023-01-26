@@ -1,9 +1,9 @@
 <template>
   <input
-    :checked="checked"
+    v-model="model"
     class="check-box-component"
     type="checkbox"
-    @change="checkBoxHandler"
+    @click.stop="checkBoxHandler"
   />
 </template>
 
@@ -12,7 +12,8 @@
  * @module components/common/CheckBox/index.vue
  * @desc компонент чекбокса. Просто слушает событие изменения состояния чекбокса и опеващает родителя о нем
  * @vue-prop {Boolean} checked - состояние чекбокса
- * @vue-event {Void} click - событие изменения чекбокса
+ * @vue-data {Boolean} model - состояние чекбокса
+ * @vue-event {Boolean} update-checkbox - событие изменения чекбокса
  */
 export default {
   name: 'CheckBox',
@@ -23,11 +24,19 @@ export default {
       default: false,
     }
   },
-  methods: {
-    checkBoxHandler() {
-      this.$emit('click')
+  data() {
+    return {
+      model: false,
     }
-  }
+  },
+  mounted() {
+    this.model = this.checked
+  },
+  methods: {
+    checkBoxHandler(ev) {
+      this.$emit('update-checkbox', ev.target.checked)
+    }
+  },
 };
 </script>
 
