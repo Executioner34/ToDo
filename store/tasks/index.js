@@ -66,9 +66,17 @@ export const actions = {
   },
   deleteTask({ commit }, id) {
     const newTasks = deleteItem({ key: 'tasks', id })
-    const lastTaskID = newTasks[newTasks.length - 1].id
-    commit('SET_TASKS', newTasks)
-    commit('SET_NEW_FREE_ID', lastTaskID + 1)
+    // Если еще остались задачи, то
+    if (newTasks.length) {
+      const lastTaskID = newTasks[newTasks.length - 1].id
+      commit('SET_TASKS', newTasks)
+      commit('SET_NEW_FREE_ID', lastTaskID + 1)
+      return
+    }
+    // если удалили последнюю задачу, то
+    commit('SET_TASKS', [])
+    commit('SET_NEW_FREE_ID', 0)
+
   },
   pullTask({ commit }, data) {
     // Обновляем задачу в localStorage
