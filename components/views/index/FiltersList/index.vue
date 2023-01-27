@@ -1,49 +1,28 @@
 <template>
   <ul class="filters-list-component">
-    <radio-input
-      v-for="item in filters"
-      :key="item"
-      v-model="activeFilter"
-      :label="item"
+    <filter-item
+      v-for="(filter, ind) in $options.filters"
+      :key="ind"
+      :value="filter"
       class="item"
     />
   </ul>
 </template>
 
 <script>
-import RadioInput from '~/components/common/RadioInput/index.vue'
+import FilterItem from "~/components/views/index/FiltersList/FilterItem/index.vue";
 
 /**
  * @module components/views/index/FiltersList/index.vue
  * @desc компонент отображения списка радио кнопок фильтра и взаимодействия со стором
  * @vue-data {Array} filters - массив фильтров
- * @vue-data {String} activeFilter - data для выбранного фильтра из стора
- * @vue-computed {String} selectedFilter - выбранный фильтр
  */
 export default {
   name: 'FiltersList',
   components: {
-    RadioInput,
+    FilterItem
   },
-  data() {
-    return {
-      activeFilter: '',
-      filters: ['all', 'active', 'completed'],
-    }
-  },
-  computed: {
-    selectedFilter() {
-      return this.$store.state.tasks.selectedFilter
-    }
-  },
-  watch: {
-    activeFilter(newName) {
-      this.$store.commit('tasks/SET_SELECTED_FILTER', newName)
-    },
-  },
-  mounted() {
-    this.activeFilter = this.selectedFilter
-  }
+  filters: ['all', 'active', 'completed'],
 }
 </script>
 
