@@ -1,6 +1,6 @@
 <template>
   <button class="filter-item-component" @click="setFilter">
-    <div :class="['circle', {'circle--active': isActive}]"></div>
+    <div :class="['circle', { 'circle--active': isActive }]"></div>
     {{ value }}
   </button>
 </template>
@@ -19,16 +19,16 @@ export default {
     value: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
   },
   computed: {
     selectedFilter() {
-      return this.$store.state.tasks.selectedFilter;
+      return this.$store.state.tasks.selectedFilter
     },
     isActive() {
       return this.selectedFilter === this.value
-    }
+    },
   },
   methods: {
     /**
@@ -36,9 +36,9 @@ export default {
      */
     setFilter() {
       this.$store.commit('tasks/SET_SELECTED_FILTER', this.value)
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,5 +61,4 @@ export default {
     }
   }
 }
-
 </style>

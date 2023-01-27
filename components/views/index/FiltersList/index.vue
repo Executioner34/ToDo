@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import FilterItem from "~/components/views/index/FiltersList/FilterItem/index.vue";
+import FilterItem from '~/components/views/index/FiltersList/FilterItem/index.vue'
 
 /**
  * @module components/views/index/FiltersList/index.vue
@@ -20,7 +20,7 @@ import FilterItem from "~/components/views/index/FiltersList/FilterItem/index.vu
 export default {
   name: 'FiltersList',
   components: {
-    FilterItem
+    FilterItem,
   },
   filters: ['all', 'active', 'completed'],
 }

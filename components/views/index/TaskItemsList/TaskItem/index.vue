@@ -1,15 +1,23 @@
 <template>
   <li class="task-item-component">
     <nuxt-link :to="path" class="link">
-      <check-box :checked="complete" class="checkbox" @update-checkbox="checkBoxHandler"/>
-      <span :class="['text', {'text--complete': isCompleted}]">{{ textTask }}</span>
-      <button class="btn" @click.stop.prevent="deleteHandler">❌</button>
+      <check-box
+        :value="complete"
+        class="checkbox"
+        @update-checkbox="checkBoxHandler"
+      />
+      <span :class="['text', { 'text--complete': isCompleted }]">{{
+        textTask
+      }}</span>
+      <button type="button" class="btn" @click.self.prevent="deleteHandler">
+        ❌
+      </button>
     </nuxt-link>
   </li>
 </template>
 
 <script>
-import CheckBox from "~/components/common/CheckBox/index.vue";
+import CheckBox from '~/components/common/CheckBox/index.vue'
 
 /**
  * @module components/views/index/TaskItemsList/TaskItem/index.vue
@@ -25,7 +33,7 @@ import CheckBox from "~/components/common/CheckBox/index.vue";
 export default {
   name: 'TaskItem',
   components: {
-    CheckBox
+    CheckBox,
   },
   props: {
     textTask: {
@@ -50,14 +58,14 @@ export default {
     },
     path() {
       return '/todo/' + this.id
-    }
+    },
   },
   methods: {
     checkBoxHandler(value) {
       const data = {
         text: this.textTask,
         id: this.id,
-        checked: value
+        checked: value,
       }
       this.$emit('toggle-complete', data)
     },

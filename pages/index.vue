@@ -12,7 +12,7 @@
 import TaskItemsList from '~/components/views/index/TaskItemsList/index.vue'
 import AddTask from '~/components/views/index/AddTask/index.vue'
 import FiltersList from '~/components/views/index/FiltersList/index.vue'
-import AppContainer from "~/components/general/AppContainer/index.vue";
+import AppContainer from '~/components/general/AppContainer/index.vue'
 
 /**
  * @module pages/index.vue
