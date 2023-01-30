@@ -9,10 +9,10 @@
       <span :class="['text', { 'text--complete': isCompleted }]">{{
         textTask
       }}</span>
-      <button type="button" class="btn" @click.self.prevent="deleteHandler">
-        ❌
-      </button>
     </nuxt-link>
+    <button type="button" class="btn" @click.prevent="deleteHandler">
+      ❌
+    </button>
   </li>
 </template>
 
@@ -78,7 +78,12 @@ export default {
 
 <style lang="scss" scoped>
 .task-item-component {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   .link {
+    width: 100%;
     display: flex;
     align-items: center;
     height: 40px;
